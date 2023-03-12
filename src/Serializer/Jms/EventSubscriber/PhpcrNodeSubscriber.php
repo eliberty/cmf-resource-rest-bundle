@@ -38,7 +38,7 @@ class PhpcrNodeSubscriber implements EventSubscriberInterface
         $object = $event->getObject();
 
         if ($object instanceof NodeInterface) {
-            $event->setType('PHPCR\NodeInterface');
+            $event->setType(\PHPCR\NodeInterface::class);
         }
     }
 }

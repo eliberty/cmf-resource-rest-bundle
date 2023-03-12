@@ -51,9 +51,7 @@ class Configuration implements ConfigurationInterface
                                         ->requiresAtLeastOneElement()
                                         ->beforeNormalization()
                                             ->ifString()
-                                            ->then(function ($v) {
-                                                return [$v];
-                                            })
+                                            ->then(fn($v) => [$v])
                                         ->end()
                                         ->prototype('scalar')->end()
                                     ->end() // roles

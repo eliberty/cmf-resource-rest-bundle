@@ -30,11 +30,11 @@ use Symfony\Cmf\Component\Resource\RepositoryRegistryInterface;
  */
 class ResourceHandler implements SubscribingHandlerInterface
 {
-    private $registry;
+    private \Symfony\Cmf\Component\Resource\RepositoryRegistryInterface $registry;
 
-    private $payloadAliasRegistry;
+    private \Symfony\Cmf\Bundle\ResourceRestBundle\Registry\PayloadAliasRegistry $payloadAliasRegistry;
 
-    private $descriptionFactory;
+    private \Symfony\Cmf\Component\Resource\Description\DescriptionFactory $descriptionFactory;
 
     private $maxDepth;
 

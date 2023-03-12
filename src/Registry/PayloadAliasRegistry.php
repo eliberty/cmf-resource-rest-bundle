@@ -22,15 +22,9 @@ use Symfony\Cmf\Component\Resource\RepositoryRegistryInterface;
  */
 class PayloadAliasRegistry
 {
-    /**
-     * @var array
-     */
-    private $aliasesByRepository = [];
+    private array $aliasesByRepository = [];
 
-    /**
-     * @var RepositoryRegistryInterface
-     */
-    private $repositoryRegistry;
+    private \Symfony\Cmf\Component\Resource\RepositoryRegistryInterface $repositoryRegistry;
 
     public function __construct(RepositoryRegistryInterface $repositoryRegistry, array $aliases = [])
     {

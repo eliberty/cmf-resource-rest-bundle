@@ -24,29 +24,17 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ResourceController
 {
-    const ROLE_RESOURCE_READ = 'CMF_RESOURCE_READ';
+    public const ROLE_RESOURCE_READ = 'CMF_RESOURCE_READ';
 
-    const ROLE_RESOURCE_WRITE = 'CMF_RESOURCE_WRITE';
+    public const ROLE_RESOURCE_WRITE = 'CMF_RESOURCE_WRITE';
 
-    /**
-     * @var RepositoryRegistryInterface
-     */
-    private $registry;
+    private \Symfony\Cmf\Component\Resource\RepositoryRegistryInterface $registry;
 
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
+    private \JMS\Serializer\SerializerInterface $serializer;
 
-    /**
-     * @var ResourceHandler
-     */
-    private $resourceHandler;
+    private \Symfony\Cmf\Bundle\ResourceRestBundle\Serializer\Jms\Handler\ResourceHandler $resourceHandler;
 
-    /**
-     * @var AuthorizationCheckerInterface|null
-     */
-    private $authorizationChecker;
+    private ?\Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker = null;
 
     public function __construct(SerializerInterface $serializer, RepositoryRegistryInterface $registry, ResourceHandler $resourceHandler, AuthorizationCheckerInterface $authorizationChecker = null)
     {
@@ -105,13 +93,14 @@ class ResourceController
      */
     public function patchResourceAction($repositoryName, $path, Request $request)
     {
+        $resource = null;
         $path = '/'.ltrim($path, '/');
         $repository = $this->registry->get($repositoryName);
 
         $fullPath = method_exists($repository, 'resolvePath') ? $repository->resolvePath($path) : $path;
         $this->guardAccess('write', $repositoryName, $fullPath);
 
-        $requestContent = json_decode($request->getContent(), true);
+        $requestContent = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         if (!$requestContent) {
             return $this->badRequestResponse('Only JSON request bodies are supported.');
         }

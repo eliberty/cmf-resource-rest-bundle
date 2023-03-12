@@ -30,7 +30,7 @@ class PhpcrNodeHandler implements SubscribingHandlerInterface
             [
                 'event' => GraphNavigator::DIRECTION_SERIALIZATION,
                 'format' => 'json',
-                'type' => 'PHPCR\NodeInterface',
+                'type' => \PHPCR\NodeInterface::class,
                 'method' => 'serializePhpcrNode',
             ],
         ];
